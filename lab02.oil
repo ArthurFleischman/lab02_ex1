@@ -1,0 +1,99 @@
+OIL_VERSION = "2.5" : "test" ;
+IMPLEMENTATION trampoline {
+
+    /* This fix the default STACKSIZE of tasks */
+    TASK {
+        UINT32 STACKSIZE = 8192 ;
+    } ;
+
+    /* This fix the default STACKSIZE of ISRs */
+    ISR {
+        UINT32 STACKSIZE = 8192 ;
+    } ;
+};
+
+CPU test {    
+  OS config {
+    STATUS = STANDARD;
+    BUILD = TRUE {
+      TRAMPOLINE_BASE_PATH = "../../../..";
+      APP_NAME = "lab_02_exe";
+      APP_SRC = "lab02.cpp";
+      CPPCOMPILER = "avr-g++";
+      COMPILER = "avr-gcc";
+      LINKER = "avr-gcc";
+      ASSEMBLER = "avr-gcc";
+      COPIER = "avr-objcopy";
+      SYSTEM = PYTHON;
+      LIBRARY=serial;
+    };
+    SYSTEM_CALL = TRUE;
+  };
+
+  APPMODE stdAppmode {};
+  MESSAGE msgfrom_C {
+    MESSAGEPROPERTY = SEND_STATIC_INTERNAL {
+      CDATATYPE = "int";
+    };
+  };
+
+  ALARM a100msec{
+    COUNTER = SystemCounter;
+    ACTION = ACTIVATETASK {TASK = Periodic_Task_C;};
+    AUTOSTART = TRUE {APPMODE = stdAppmode; ALARMTIME = 100; CYCLETIME=100; };
+  };
+  ALARM a100msec{
+    COUNTER = SystemCounter;
+    ACTION = ACTIVATETASK {TASK = Task_M;};
+    AUTOSTART = TRUE {APPMODE = stdAppmode; ALARMTIME = 500; CYCLETIME=500; };
+  };
+
+  MESSAGE M_receive {
+    MESSAGEPROPERTY = RECEIVE_QUEUED_INTERNAL {
+      SENDINGMESSAGE = msgfrom_C;
+      QUEUESIZE = 10;
+    };
+    NOTIFICATION = ACTIVATETASK {
+      TASK = Task_M;
+    };
+  };
+
+   MESSAGE msgfrom_M {
+    MESSAGEPROPERTY = SEND_STATIC_INTERNAL {
+      CDATATYPE = "int";
+    };
+  };
+
+   MESSAGE V_receive {
+    MESSAGEPROPERTY = RECEIVE_QUEUED_INTERNAL {
+      SENDINGMESSAGE = msgfrom_M;
+      QUEUESIZE = 15;
+    };
+    NOTIFICATION = ACTIVATETASK {
+      TASK = Task_V;
+    };
+  };
+
+  TASK Periodic_Task_C {
+    PRIORITY = 3;
+    AUTOSTART = TRUE { APPMODE = stdAppmode; };
+    ACTIVATION = 1;
+    SCHEDULE = FULL;
+  };
+
+  TASK Task_M {
+    PRIORITY = 2;
+    AUTOSTART = FALSE;
+    ACTIVATION = 1;
+    MESSAGE = M_receive;
+    SCHEDULE = FULL;
+  };
+
+  TASK Task_V {
+    PRIORITY = 1;
+    AUTOSTART = FALSE;
+    ACTIVATION = 1;
+    MESSAGE = V_receive;
+    SCHEDULE = FULL;
+  };
+};

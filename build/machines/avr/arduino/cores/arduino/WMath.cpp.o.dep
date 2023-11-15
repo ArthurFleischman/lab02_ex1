@@ -1,0 +1,8 @@
+build/machines/avr/arduino/cores/arduino/WMath.cpp.o: \
+ ../../../../machines/avr/arduino/cores/arduino/WMath.cpp \
+ /opt/homebrew/Cellar/avr-gcc@9/9.4.0/avr/include/stdlib.h \
+ /opt/homebrew/Cellar/avr-gcc@9/9.4.0/lib/avr-gcc/9/gcc/avr/9.4.0/include/stddef.h
+
+/opt/homebrew/Cellar/avr-gcc@9/9.4.0/avr/include/stdlib.h:
+
+/opt/homebrew/Cellar/avr-gcc@9/9.4.0/lib/avr-gcc/9/gcc/avr/9.4.0/include/stddef.h:

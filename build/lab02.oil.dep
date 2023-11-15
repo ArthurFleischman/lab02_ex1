@@ -1,0 +1,10 @@
+lab02.oil: \
+ /Users/arthur/Projects/Polito/trampoline/goil/templates/config/config.oil \
+ /Users/arthur/Projects/Polito/trampoline/goil/templates/config/kernel.oil \
+ /Users/arthur/Projects/Polito/trampoline/goil/templates/config/api.oil \
+ /Users/arthur/Projects/Polito/trampoline/goil/templates/config/api_STM.oil \
+ /Users/arthur/Projects/Polito/trampoline/goil/templates/config/api_ioc.oil \
+ /Users/arthur/Projects/Polito/trampoline/goil/templates/config/avr/config.oil \
+ /Users/arthur/Projects/Polito/trampoline/goil/templates/config/avr/arduino/config.oil \
+ /Users/arthur/Projects/Polito/trampoline/goil/templates/config/avr/arduino/uno/config.oil \
+ /Users/arthur/Projects/Polito/trampoline/goil/templates/config/config2.5.oil
