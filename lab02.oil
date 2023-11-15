@@ -1,16 +1,4 @@
 OIL_VERSION = "2.5" : "test" ;
-IMPLEMENTATION trampoline {
-
-    /* This fix the default STACKSIZE of tasks */
-    TASK {
-        UINT32 STACKSIZE = 8192 ;
-    } ;
-
-    /* This fix the default STACKSIZE of ISRs */
-    ISR {
-        UINT32 STACKSIZE = 8192 ;
-    } ;
-};
 
 CPU test {    
   OS config {
@@ -42,19 +30,21 @@ CPU test {
     ACTION = ACTIVATETASK {TASK = Periodic_Task_C;};
     AUTOSTART = TRUE {APPMODE = stdAppmode; ALARMTIME = 100; CYCLETIME=100; };
   };
-  ALARM a100msec{
+  ALARM a500msec{
     COUNTER = SystemCounter;
     ACTION = ACTIVATETASK {TASK = Task_M;};
     AUTOSTART = TRUE {APPMODE = stdAppmode; ALARMTIME = 500; CYCLETIME=500; };
+  };
+  ALARM a250msec{
+     COUNTER = SystemCounter;
+    ACTION = ACTIVATETASK {TASK = Task_V;};
+    AUTOSTART = TRUE {APPMODE = stdAppmode; ALARMTIME = 700; CYCLETIME=250; };
   };
 
   MESSAGE M_receive {
     MESSAGEPROPERTY = RECEIVE_QUEUED_INTERNAL {
       SENDINGMESSAGE = msgfrom_C;
       QUEUESIZE = 10;
-    };
-    NOTIFICATION = ACTIVATETASK {
-      TASK = Task_M;
     };
   };
 
@@ -69,15 +59,13 @@ CPU test {
       SENDINGMESSAGE = msgfrom_M;
       QUEUESIZE = 15;
     };
-    NOTIFICATION = ACTIVATETASK {
-      TASK = Task_V;
-    };
   };
 
   TASK Periodic_Task_C {
-    PRIORITY = 3;
-    AUTOSTART = TRUE { APPMODE = stdAppmode; };
+    PRIORITY = 2;
+    AUTOSTART = FALSE;
     ACTIVATION = 1;
+    MESSAGE = msgfrom_C;
     SCHEDULE = FULL;
   };
 
@@ -86,6 +74,7 @@ CPU test {
     AUTOSTART = FALSE;
     ACTIVATION = 1;
     MESSAGE = M_receive;
+    MESSAGE = msgfrom_M;
     SCHEDULE = FULL;
   };
 

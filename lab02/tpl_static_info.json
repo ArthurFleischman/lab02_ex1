@@ -7,6 +7,50 @@
       "ACTION" : "ACTIVATETASK",
       "ACTION_S" : 
       {
+        "TASK" : "Periodic_Task_C"
+      },
+      "AUTOSTART" : "true",
+      "AUTOSTART_S" : 
+      {
+        "ALARMTIME" : 100,
+        "APPMODE" : 
+        [
+          
+          {
+            "VALUE" : "stdAppmode"
+          }
+        ],
+        "CYCLETIME" : 100
+      },
+      "COUNTER" : "SystemCounter",
+      "NAME" : "a100msec"
+    },    
+    {
+      "ACTION" : "ACTIVATETASK",
+      "ACTION_S" : 
+      {
+        "TASK" : "Task_V"
+      },
+      "AUTOSTART" : "true",
+      "AUTOSTART_S" : 
+      {
+        "ALARMTIME" : 700,
+        "APPMODE" : 
+        [
+          
+          {
+            "VALUE" : "stdAppmode"
+          }
+        ],
+        "CYCLETIME" : 250
+      },
+      "COUNTER" : "SystemCounter",
+      "NAME" : "a250msec"
+    },    
+    {
+      "ACTION" : "ACTIVATETASK",
+      "ACTION_S" : 
+      {
         "TASK" : "Task_M"
       },
       "AUTOSTART" : "true",
@@ -18,15 +62,12 @@
           
           {
             "VALUE" : "stdAppmode"
-          },          
-          {
-            "VALUE" : "stdAppmode"
           }
         ],
         "CYCLETIME" : 500
       },
       "COUNTER" : "SystemCounter",
-      "NAME" : "a100msec"
+      "NAME" : "a500msec"
     }
   ],
   "event" : [],
@@ -43,12 +84,8 @@
         "SENDINGMESSAGE" : "msgfrom_C"
       },
       "NAME" : "M_receive",
-      "NOTIFICATION" : "ACTIVATETASK",
-      "NOTIFICATIONERROR" : "NONE",
-      "NOTIFICATION_S" : 
-      {
-        "TASK" : "Task_M"
-      }
+      "NOTIFICATION" : "NONE",
+      "NOTIFICATIONERROR" : "NONE"
     },    
     {
       "MESSAGEPROPERTY" : "RECEIVE_QUEUED_INTERNAL",
@@ -58,12 +95,8 @@
         "SENDINGMESSAGE" : "msgfrom_M"
       },
       "NAME" : "V_receive",
-      "NOTIFICATION" : "ACTIVATETASK",
-      "NOTIFICATIONERROR" : "NONE",
-      "NOTIFICATION_S" : 
-      {
-        "TASK" : "Task_V"
-      }
+      "NOTIFICATION" : "NONE",
+      "NOTIFICATIONERROR" : "NONE"
     },    
     {
       "MESSAGEPROPERTY" : "SEND_STATIC_INTERNAL",
@@ -105,7 +138,7 @@
       "NONPREEMPTABLE" : "false",
       "PRIORITY" : 1,
       "SCHEDULE" : "FULL",
-      "STACKSIZE" : 8192,
+      "STACKSIZE" : 128,
       "USEINTERNALRESOURCE" : "false"
     },    
     {
@@ -117,34 +150,34 @@
         
         {
           "VALUE" : "M_receive"
+        },        
+        {
+          "VALUE" : "msgfrom_M"
         }
       ],
       "NAME" : "Task_M",
       "NONPREEMPTABLE" : "false",
       "PRIORITY" : 2,
       "SCHEDULE" : "FULL",
-      "STACKSIZE" : 8192,
+      "STACKSIZE" : 128,
       "USEINTERNALRESOURCE" : "false"
     },    
     {
       "ACTIVATION" : 1,
-      "AUTOSTART" : "true",
-      "AUTOSTART_S" : 
-      {
-        "APPMODE" : 
-        [
-          
-          {
-            "VALUE" : "stdAppmode"
-          }
-        ]
-      },
+      "AUTOSTART" : "false",
       "KIND" : "Task",
+      "MESSAGE" : 
+      [
+        
+        {
+          "VALUE" : "msgfrom_C"
+        }
+      ],
       "NAME" : "Periodic_Task_C",
       "NONPREEMPTABLE" : "false",
-      "PRIORITY" : 3,
+      "PRIORITY" : 2,
       "SCHEDULE" : "FULL",
-      "STACKSIZE" : 8192,
+      "STACKSIZE" : 128,
       "USEINTERNALRESOURCE" : "false"
     }
   ]
